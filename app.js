@@ -1,1 +1,14 @@
-const header=document.getElementById("siteHeader");let reloadingForServiceWorker=false;function updateHeader(){header.classList.toggle("scrolled",window.scrollY>18)}window.addEventListener("scroll",updateHeader,{passive:true});document.getElementById("year").textContent=new Date().getFullYear();updateHeader();document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});let lastTouchEnd=0;document.addEventListener("touchend",e=>{const now=Date.now();if(now-lastTouchEnd<=300)e.preventDefault();lastTouchEnd=now},{passive:false});async function updateSW(r){try{await r.update()}catch(e){console.debug("Service worker update check skipped:",e)}}if("serviceWorker"in navigator){window.addEventListener("load",async()=>{try{const r=await navigator.serviceWorker.register("./sw.js");updateSW(r);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")updateSW(r)});navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForServiceWorker)return;reloadingForServiceWorker=true;window.location.reload()})}catch(e){console.warn("Service worker registration failed:",e)}})}
+const header = document.getElementById("siteHeader");
+
+function updateHeader() {
+  header.classList.toggle("scrolled", window.scrollY > 18);
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+document.getElementById("year").textContent = new Date().getFullYear();
+updateHeader();
+
+// Clean up the old offline/app service worker for anyone who visited before it was removed.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+}

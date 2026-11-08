@@ -1,1 +1,12 @@
-const CACHE_NAME="fletcher-jones-psychology-v2";const APP_SHELL=["./","./index.html","./style.css","./app.js","./manifest.json","./icon-192.png","./icon-512.png"];self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(APP_SHELL)))});self.addEventListener("activate",e=>{e.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))),self.clients.claim()]))});self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;e.respondWith(fetch(r).then(resp=>{if(resp&&resp.status===200&&resp.type!=="opaque"){const copy=resp.clone();caches.open(CACHE_NAME).then(c=>c.put(r,copy))}return resp}).catch(async()=>{const cached=await caches.match(r);if(cached)return cached;if(r.mode==="navigate")return caches.match("./index.html");return Response.error()}))});
+// Retired service worker. Earlier versions of the site cached files for offline/app use.
+// This version clears those caches and removes itself so visitors always get the live site.
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+    await self.registration.unregister();
+    const clients = await self.clients.matchAll({ type: "window" });
+    clients.forEach(c => c.navigate(c.url));
+  })());
+});
