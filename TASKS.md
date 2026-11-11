@@ -5,11 +5,10 @@
 - [ ] Qualifications and professional registrations (exact wording)
 - [ ] What she offers and how she works (online / in person, area, fees if listed)
 - [ ] Portrait photograph
-- [ ] Logo — supply one, or choose from designed options
 
 ## Design and build
 - [ ] Agree visual direction (keep the sage and cream, or try alternatives)
-- [ ] Logo (if designing)
+- [ ] Decide whether the leaf illustration on the holding page should stay now the FJ monogram is the logo
 - [ ] Build full site: Home, About Kathryn, Contact
 - [ ] Check layouts on small and large phones and desktop; accessibility pass
 

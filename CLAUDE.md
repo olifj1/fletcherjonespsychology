@@ -14,9 +14,9 @@ All site files live in the repo root:
 - `style.css` — all styling
 - `app.js` — small enhancements (header scroll state, footer year)
 - `sw.js` — retired service worker; it only clears old caches and unregisters itself. Keep it until there's no chance of old visitors returning (well into 2027), then delete it.
-- `icon-192.png`, `icon-512.png` — favicon / touch icon
+- `icon-192.png`, `icon-512.png` — favicon / touch icon (FJ monogram on cream). Linked with `?v=2`; bump it if they change again.
 - `CNAME` — custom domain. **Never remove or change.**
-- `assets/` — images (create when first needed)
+- `assets/` — images. `logo.png` is the FJ monogram in brand green (#47665a) on transparent, made from the owner's black-on-white original.
 
 ## Working method
 
